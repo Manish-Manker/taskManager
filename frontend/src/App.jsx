@@ -6,7 +6,7 @@ import TaskList from './components/TaskList';
 
 const theme = createTheme({
   palette: {
-    mode: 'dark',
+    mode: 'light',
     primary: {
       main: '#1976d2',
     },

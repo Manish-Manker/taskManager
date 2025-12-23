@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect , useState } from 'react';
 import {
   Box,
   Typography,
@@ -19,6 +19,7 @@ import {
 import TaskItem from './TaskItem';
 import TaskForm from './TaskForm';
 import useTaskStore from '../stores/taskStore';
+import AppInfo from './AppInfo';
 
 const TaskList = () => {
   const {
@@ -34,7 +35,7 @@ const TaskList = () => {
     openTaskForm,
     closeTaskForm,
   } = useTaskStore();
-
+const [isInfoOpen, setIsInfoOpen] = useState(false);
   const filteredTasks = getFilteredTasks();
   useEffect(() => {
     fetchTasks();
@@ -156,6 +157,7 @@ const TaskList = () => {
 
       {/* Task Form Dialog */}
       <TaskForm open={isFormOpen} onClose={closeTaskForm} />
+      <AppInfo open={isInfoOpen} onClose={() => setIsInfoOpen(false)} />
     </Box>
   );
 };

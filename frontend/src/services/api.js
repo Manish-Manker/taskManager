@@ -1,6 +1,18 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
+// Determine API base URL based on environment
+const getApiBaseUrl = () => {
+  // In Electron app
+  if (window.electronAPI) {
+    const isDev = window.electronAPI.isDev || process.env.NODE_ENV === 'development';
+    return isDev ? 'http://localhost:5001/api' : '/api';
+  }
+  
+  // In web browser
+  return import.meta.env.VITE_API_BASE_URL || 'http://localhost:5001/api';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
@@ -47,5 +59,8 @@ export const taskApi = {
     return response.data;
   },
 };
+
+// Electron-specific APIs
+export const electronApi = window.electronAPI || null;
 
 export default api;
